@@ -24,7 +24,7 @@ public class UserServiceTest {
 
 
     @Test
-    public void getUsersTest(){
+    private void getUsersTest(){
         User user = new User();
         user.setName("Parashar");
         User user2 = new User();
@@ -38,7 +38,7 @@ public class UserServiceTest {
 
 
     @Test
-    public void getUserByIdTest(){
+    private void getUserByIdTest(){
         User user = new User();
         user.setName("Parashar");
         MalaBarResponse<User> malaBarResponse = new MalaBarResponse<>();
@@ -48,7 +48,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void fetchUsersTest(){
+    private void fetchUsersTest(){
 
 
     }
