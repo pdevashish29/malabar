@@ -3,6 +3,7 @@ package com.pdp.reactive.malabar.controller;
 import com.pdp.reactive.malabar.model.MalaBarResponse;
 import com.pdp.reactive.malabar.model.User;
 import com.pdp.reactive.malabar.service.UserService;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +29,8 @@ public class UserControllerTest {
 
 
 
-    //@Test
+
+    @Test
     public void getUsersTest() throws Exception {
         User user = new User();
         user.setId(101l);
@@ -44,7 +46,7 @@ public class UserControllerTest {
         Mockito.verify(service, times(1)).getUsers();
     }
 
-    //@Test
+    @Test
     public void getUserByIdTest() throws Exception {
         User user = new User();
         user.setId(101l);
