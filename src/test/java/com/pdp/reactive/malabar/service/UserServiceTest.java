@@ -3,16 +3,18 @@ package com.pdp.reactive.malabar.service;
 import com.pdp.reactive.malabar.model.MalaBarResponse;
 import com.pdp.reactive.malabar.model.User;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import static org.mockito.Mockito.when;
-@SpringBootTest
+
+@ExtendWith(SpringExtension.class)
 public class UserServiceTest {
 
 
@@ -24,7 +26,7 @@ public class UserServiceTest {
 
 
     @Test
-    private void getUsersTest(){
+    public void getUsersTest(){
         User user = new User();
         user.setName("Parashar");
         User user2 = new User();
@@ -38,7 +40,7 @@ public class UserServiceTest {
 
 
     @Test
-    private void getUserByIdTest(){
+    public void getUserByIdTest(){
         User user = new User();
         user.setName("Parashar");
         MalaBarResponse<User> malaBarResponse = new MalaBarResponse<>();
@@ -48,8 +50,7 @@ public class UserServiceTest {
     }
 
     @Test
-    private void fetchUsersTest(){
-
+    public void fetchUsersTest(){
 
     }
 }

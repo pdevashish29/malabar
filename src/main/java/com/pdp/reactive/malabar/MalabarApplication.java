@@ -16,7 +16,16 @@ public class MalabarApplication {
 
 	@Bean
 	@Scope("prototype")
-	public WebClient getWebClient(){
+	public WebClient getJsonPlaceHolderWebClient(){
 		return  WebClient.create("https://jsonplaceholder.typicode.com/");
 	}
+
+	@Bean("GITHUB")
+	@Scope("prototype")
+	public WebClient getGithubWebClient(){
+		WebClient webClient = WebClient.create("https://api.github.com");
+		return  webClient;
+	}
+
+
 }
