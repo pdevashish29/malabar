@@ -36,24 +36,21 @@ public class UserService {
     public Mono<MalaBarResponse<List<User>>> fetchUsers(Long fromUserId,Long toUserId) {
         MalaBarResponse<List<User>> response = new MalaBarResponse<>();
         List<Long> userIds = LongStream.rangeClosed(fromUserId, toUserId).boxed().collect(Collectors.toList());
-        return httpService.fetchUsers(userIds)
-                .collectSortedList(Comparator.comparing(User::getId)).flatMap(item -> {
+        return httpService.fetchUsers(userIds).collectSortedList(Comparator.comparing(User::getId)).flatMap(item -> {
             response.setData(item);
             return Mono.just(response);
         });
 
     }
     public Mono<MalaBarResponse<UserTimeLine>> getUserTimeLine(Long userId) {
-        return httpService.getUserById(userId).flatMap(user -> {
-           return httpService.getPostsByUserId(user.getId()).flatMap( posts -> {
-                MalaBarResponse<UserTimeLine> response = new MalaBarResponse<>();
-                UserTimeLine userTimeLine = new UserTimeLine();
-                userTimeLine.setUser(user);
-                userTimeLine.setPosts(posts);
-                response.setData(userTimeLine);
-               return Mono.just(response);
-            });
-        });
+        return httpService.getUserById(userId).flatMap(user -> httpService.getPostsByUserId(user.getId()).flatMap(posts -> {
+             MalaBarResponse<UserTimeLine> response = new MalaBarResponse<>();
+             UserTimeLine userTimeLine = new UserTimeLine();
+             userTimeLine.setUser(user);
+             userTimeLine.setPosts(posts);
+             response.setData(userTimeLine);
+            return Mono.just(response);
+         }));
     }
 
     public Mono<MalaBarResponse<UserTimeLine>> getUserTimeLine2(Long userId) {
@@ -70,12 +67,10 @@ public class UserService {
     }
 
     private Mono<List<Post>> populateComments(List<Post> item1) {
-        return Flux.fromIterable(item1).flatMap(post -> {
-            return httpService.getCommentsByPostId(post.getId()).collectSortedList(Comparator.comparing(Comment::getId )).flatMap(item2 -> {
-                post.setComments(item2);
-                return Mono.just(post);
-            });
-        }).collectSortedList(Comparator.comparing(Post::getUserId)).flatMap(Mono::just);
+         return Flux.fromIterable(item1).flatMap(post -> httpService.getCommentsByPostId(post.getId()).collectSortedList(Comparator.comparing(Comment::getId)).flatMap(item2 -> {
+            post.setComments(item2);
+            return Mono.just(post);
+        })).collectSortedList(Comparator.comparing(Post::getUserId)).flatMap(Mono::just);
     }
 
     private  Mono<MalaBarResponse<UserTimeLine>> populateResponse(Tuple2<User, List<Post>> data) {

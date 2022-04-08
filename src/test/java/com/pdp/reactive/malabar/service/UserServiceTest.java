@@ -41,13 +41,15 @@ public class UserServiceTest {
     public void getUserByIdTest(){
         User user = new User();
         user.setName("Parashar");
-        MalaBarResponse<User> malaBarResponse = new MalaBarResponse<User>();
+        MalaBarResponse<User> malaBarResponse = new MalaBarResponse<>();
         malaBarResponse.setData(user);
         when(httpService.getUserById(Mockito.anyLong())).thenReturn(Mono.just(user));
-        StepVerifier.create( userService.getUserById(1l)).expectNext(malaBarResponse).verifyComplete();
+        StepVerifier.create( userService.getUserById(1L)).expectNext(malaBarResponse).verifyComplete();
     }
 
     @Test
     public void fetchUsersTest(){
+
+
     }
 }
