@@ -1,9 +1,6 @@
 package com.pdp.reactive.malabar.service;
 
-import com.pdp.reactive.malabar.model.MalaBarResponse;
-import com.pdp.reactive.malabar.model.Post;
-import com.pdp.reactive.malabar.model.User;
-import com.pdp.reactive.malabar.model.UserTimeLine;
+import com.pdp.reactive.malabar.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +13,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
-@SuppressWarnings("unused")
 @Service
 @Slf4j
 public class UserService {
@@ -25,6 +21,7 @@ public class UserService {
     private HttpService httpService;
 
     public Flux<User> getUsers() {
+        log.info("UserService getUsers ....");
         return httpService.getUsers();
     }
 
@@ -40,7 +37,7 @@ public class UserService {
         MalaBarResponse<List<User>> response = new MalaBarResponse<>();
         List<Long> userIds = LongStream.rangeClosed(fromUserId, toUserId).boxed().collect(Collectors.toList());
         return httpService.fetchUsers(userIds)
-                .collectSortedList(Comparator.comparing(o1 -> o1.getId())).flatMap(item -> {
+                .collectSortedList(Comparator.comparing(User::getId)).flatMap(item -> {
             response.setData(item);
             return Mono.just(response);
         });
@@ -74,13 +71,11 @@ public class UserService {
 
     private Mono<List<Post>> populateComments(List<Post> item1) {
         return Flux.fromIterable(item1).flatMap(post -> {
-            return httpService.getCommentsByPostId(post.getId()).collectSortedList(Comparator.comparing(o1 -> o1.getId())).flatMap(item2 -> {
+            return httpService.getCommentsByPostId(post.getId()).collectSortedList(Comparator.comparing(Comment::getId )).flatMap(item2 -> {
                 post.setComments(item2);
                 return Mono.just(post);
             });
-        }).collectSortedList(Comparator.comparing(o1 -> o1.getId())).flatMap(data -> {
-            return Mono.just(data);
-        });
+        }).collectSortedList(Comparator.comparing(Post::getUserId)).flatMap(Mono::just);
     }
 
     private  Mono<MalaBarResponse<UserTimeLine>> populateResponse(Tuple2<User, List<Post>> data) {

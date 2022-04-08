@@ -15,7 +15,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-@SuppressWarnings("ALL")
 @RestController
 @Slf4j
 public class UserController {
@@ -24,23 +23,17 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users")
-    public Flux<User> getPerson(){
+    public Flux<User> getPersons(){
         return userService.getUsers();
     }
 
     @GetMapping("/users/{id}")
-    public Mono<MalaBarResponse<User>> getPerson(@PathVariable Long id){
+    public Mono<MalaBarResponse<User>> getPersonById(@PathVariable Long id){
         return userService.getUserById(id);
     }
 
     @GetMapping("/users-timeline/{id}")
     public Mono<MalaBarResponse<UserTimeLine>> getUserTimeLine(@PathVariable Long id){
-        log.info("users-timeline/"+id);
-       //return userService.getUserTimeLine(id);
-        //return userService.getUserTimeLine2(id);
-        // user  Call --1 user
-        // List<Post> call  -10 POST  -- 1post == 5 comments
-         //       Post --> List<Comment> 50 Comments
         return userService.getUserTimeLine3(id);
     }
 

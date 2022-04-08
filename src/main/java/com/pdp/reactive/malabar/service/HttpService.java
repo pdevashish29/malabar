@@ -3,6 +3,7 @@ package com.pdp.reactive.malabar.service;
 import com.pdp.reactive.malabar.model.Comment;
 import com.pdp.reactive.malabar.model.Post;
 import com.pdp.reactive.malabar.model.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 @Service
+@Slf4j
 public class HttpService {
 
 
@@ -20,6 +22,7 @@ public class HttpService {
     WebClient webClient;
 
     public Flux<User> getUsers(){
+        log.info("HttpService getUsers ....");
       return webClient.get().uri("/users")
                 .retrieve()
                 .bodyToFlux(User.class);
@@ -32,7 +35,7 @@ public class HttpService {
     }
     public Flux<User> fetchUsers(List<Long> userIds) {
         return Flux.fromIterable(userIds)
-                .flatMap(id -> getUserById(id));
+                .flatMap(this::getUserById);
     }
 
     public Mono<List<Post>> getPostsByUserId(Long userId){

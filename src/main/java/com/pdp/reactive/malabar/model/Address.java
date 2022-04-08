@@ -2,7 +2,6 @@ package com.pdp.reactive.malabar.model;
 
 import lombok.Data;
 
-@SuppressWarnings("unused")
 @Data
 public class Address {
 
