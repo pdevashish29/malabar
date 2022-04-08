@@ -3,6 +3,7 @@ package com.pdp.reactive.malabar;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -16,6 +17,7 @@ public class MalabarApplication {
 
 	@Bean
 	@Scope("prototype")
+	@Primary
 	public WebClient getJsonPlaceHolderWebClient(){
 		return  WebClient.create("https://jsonplaceholder.typicode.com/");
 	}
