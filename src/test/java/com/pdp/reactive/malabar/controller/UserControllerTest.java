@@ -28,8 +28,6 @@ public class UserControllerTest {
     private WebTestClient webClient;
 
 
-
-
     @Test
     public void getUsersTest() throws Exception {
         User user = new User();
