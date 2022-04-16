@@ -19,6 +19,7 @@ public class MalabarApplication {
 	@Scope("prototype")
 	@Primary
 	public WebClient getJsonPlaceHolderWebClient(){
+		//172.31.40.38
 		return  WebClient.create("https://jsonplaceholder.typicode.com/");
 	}
 

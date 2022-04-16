@@ -1,6 +1,6 @@
 package com.pdp.reactive.malabar.controller;
 
-import com.pdp.reactive.malabar.model.MalaBarResponse;
+import com.pdp.reactive.malabar.vo.MalaBarResponse;
 import com.pdp.reactive.malabar.model.User;
 import com.pdp.reactive.malabar.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -28,14 +28,11 @@ public class UserControllerTest {
     private WebTestClient webClient;
 
 
-
-
     @Test
     public void getUsersTest() throws Exception {
         User user = new User();
         user.setId(101l);
         user.setName("Parashar");
-        user.setAge(25);
         Flux<User> userFlux=Flux.just(user);
         when(service.getUsers()).thenReturn(userFlux);
         webClient.get().uri("/users")
@@ -51,7 +48,6 @@ public class UserControllerTest {
         User user = new User();
         user.setId(101l);
         user.setName("Parashar");
-        user.setAge(25);
         MalaBarResponse<User> malaBarResponse= new MalaBarResponse<>();
         malaBarResponse.setData(user);
         when(service.getUserById(Mockito.anyLong())).thenReturn(Mono.just(malaBarResponse));

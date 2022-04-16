@@ -1,8 +1,8 @@
 package com.pdp.reactive.malabar.controller;
 
-import com.pdp.reactive.malabar.model.MalaBarResponse;
+import com.pdp.reactive.malabar.vo.MalaBarResponse;
 import com.pdp.reactive.malabar.model.User;
-import com.pdp.reactive.malabar.model.UserTimeLine;
+import com.pdp.reactive.malabar.vo.UserTimeLine;
 import com.pdp.reactive.malabar.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class UserController {
     @GetMapping("/")
     public Mono<String> Index(){
         log.info("UserController index ....");
-        return Mono.just("App is working dev002");
+        return Mono.just("App is working -11");
     }
 
     @GetMapping("/users")
