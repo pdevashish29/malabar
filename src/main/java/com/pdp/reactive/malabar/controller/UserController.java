@@ -1,8 +1,8 @@
 package com.pdp.reactive.malabar.controller;
 
-import com.pdp.reactive.malabar.model.MalaBarResponse;
+import com.pdp.reactive.malabar.vo.MalaBarResponse;
 import com.pdp.reactive.malabar.model.User;
-import com.pdp.reactive.malabar.model.UserTimeLine;
+import com.pdp.reactive.malabar.vo.UserTimeLine;
 import com.pdp.reactive.malabar.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

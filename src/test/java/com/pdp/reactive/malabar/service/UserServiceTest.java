@@ -1,6 +1,6 @@
 package com.pdp.reactive.malabar.service;
 
-import com.pdp.reactive.malabar.model.MalaBarResponse;
+import com.pdp.reactive.malabar.vo.MalaBarResponse;
 import com.pdp.reactive.malabar.model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

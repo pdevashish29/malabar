@@ -1,4 +1,4 @@
-package com.pdp.reactive.malabar.model;
+package com.pdp.reactive.malabar.vo;
 
 import lombok.Data;
 
