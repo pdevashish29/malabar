@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UserControllerTest {
+ class UserControllerTest {
 
     @MockBean
     private UserService service;
@@ -29,7 +29,7 @@ public class UserControllerTest {
 
 
     @Test
-    public void getUsersTest() throws Exception {
+     void getUsersTest() throws Exception {
         User user = new User();
         user.setId(101l);
         user.setName("Parashar");
@@ -44,7 +44,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getUserByIdTest() throws Exception {
+     void getUserByIdTest() throws Exception {
         User user = new User();
         user.setId(101l);
         user.setName("Parashar");

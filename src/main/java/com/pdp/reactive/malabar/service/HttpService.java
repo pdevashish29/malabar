@@ -29,7 +29,7 @@ public class HttpService {
 
     public Flux<User> getUsers(){
         log.info("HttpService getUsers ....");
-        Flux<User> userFlux = webClient.get()
+       return webClient.get()
                 .uri("/users")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchangeToFlux(response -> {
@@ -42,7 +42,6 @@ public class HttpService {
                     }
                 });
 
-        return userFlux;
     }
 
     public Mono<User> getUserById(Long id){
