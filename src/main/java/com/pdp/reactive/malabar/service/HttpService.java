@@ -23,9 +23,6 @@ public class HttpService {
 
     @Autowired
     WebClient webClient;
-    //https://jsonplaceholder.typicode.com/
-   // jsonplaceholdeer base URL
-
 
     public Flux<User> getUsers(){
         log.info("HttpService getUsers ....");
