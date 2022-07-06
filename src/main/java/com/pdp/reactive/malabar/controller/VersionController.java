@@ -15,5 +15,10 @@ public class VersionController {
     public String getVersion(){
         return environment.getProperty("spring.application.name")+"\tis running with version "+environment.getProperty("spring.application.version");
     }
+    @GetMapping("/config-vars")
+    public String getHerokuConfigVar(){
+        return environment.getProperty("foo")+"\t <- foo  "+environment.getProperty("cow")+"<- bar.";
+    }
+
 
 }
