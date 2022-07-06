@@ -20,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/")
-    public Mono<String> Index(){
+    public Mono<String> hello(){
         log.info("UserController index ....");
         return Mono.just("App is working -11");
     }
