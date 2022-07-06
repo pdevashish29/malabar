@@ -17,7 +17,7 @@ public class VersionController {
     }
     @GetMapping("/config-vars")
     public String getHerokuConfigVar(){
-        return environment.getProperty("foo")+"\t <- foo  "+environment.getProperty("cow")+"<- bar.";
+        return "foo: "+environment.getProperty("foo") + " bar:"+environment.getProperty("cow");
     }
 
 
