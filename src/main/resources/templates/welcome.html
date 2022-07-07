@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Bootstrap Example</title>
+  <title th:text="${server_name}"> </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
@@ -15,6 +15,7 @@
   <div class="jumbotron">
     <h1 th:text="${app_name}"> </h1>
     <p th:text="'Version: '  +${app_version}"> </p>
+    <p th:text="'Server: '  +${server_name}"> </p>
   </div>
 </div>
 
