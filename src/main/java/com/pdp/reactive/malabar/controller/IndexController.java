@@ -18,6 +18,7 @@ public class IndexController {
     public String getVersion(Model model) {
         model.addAttribute("app_name",environment.getProperty("spring.application.name"));
         model.addAttribute("app_version",environment.getProperty("spring.application.version"));
+        model.addAttribute("server_name",environment.getProperty("server.name"));
         return "welcome";
     }
 
