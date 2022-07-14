@@ -26,6 +26,7 @@ public class MalabarApplication {
 	@Bean("GITHUB")
 	@Scope("prototype")
 	public WebClient getGithubWebClient(){
+		System.out.println("Hello again");
 		return WebClient.create("https://api.github.com");
 	}
 
