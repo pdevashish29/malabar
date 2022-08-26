@@ -1,5 +1,6 @@
 package com.pdp.reactive.malabar.controller;
 
+import com.pdp.reactive.malabar.model.CompanyVO;
 import com.pdp.reactive.malabar.vo.MalaBarResponse;
 import com.pdp.reactive.malabar.model.User;
 import com.pdp.reactive.malabar.vo.UserTimeLine;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -41,6 +45,21 @@ public class UserController {
         return userService.getUserTimeLine3(id);
     }
 
+    @GetMapping("/search-users")
+    public Flux<CompanyVO> searchUser() {
+        log.info("UserController getUsers ....");
+       //  List<User> users = userService.getUsers().collectList().block();
+        //List<String> list = users.stream().filter(user -> user.getCompany().getName().startsWith("R")).map(item -> item.getCompany().getName()).collect(Collectors.toList());
+        //System.out.println(list.size());
+        //System.out.println(list);
+      return userService.getUsers().filter(user -> user.getCompany().getName().startsWith("R"))
+              .map(item -> {
+                  CompanyVO companyVO = new CompanyVO();
+                  companyVO.setName(item.getCompany().getName());
+                  return companyVO;
+              });
 
+         //return Flux.empty();
+    }
 
 }
