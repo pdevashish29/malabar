@@ -1,5 +1,7 @@
 package com.pdp.reactive.malabar.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pdp.reactive.malabar.vo.MalaBarResponse;
 import com.pdp.reactive.malabar.model.User;
 import com.pdp.reactive.malabar.service.UserService;
@@ -8,10 +10,16 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
@@ -27,31 +35,28 @@ import static org.mockito.Mockito.when;
     @Autowired
     private WebTestClient webClient;
 
+    @Autowired
+    private ResourceLoader  resourceLoader;
+
+    @Autowired
+    private  ObjectMapper mapper;
 
     @Test
      void getUsersTest() throws Exception {
-        User user = new User();
-        user.setId(101l);
-        user.setName("Parashar");
-        Flux<User> userFlux=Flux.just(user);
-        when(service.getUsers()).thenReturn(userFlux);
+       List<User> users = mapper.readValue(resourceLoader.getResource("classpath:users.json").getFile(), new TypeReference<List<User>>() {});
+        when(service.getUsers()).thenReturn( Flux.fromIterable(users));
         webClient.get().uri("/users")
                 .header(HttpHeaders.ACCEPT, "application/json")
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(User.class);
-        Mockito.verify(service, times(1)).getUsers();
+                .expectBodyList(User.class).hasSize(10);
     }
 
     @Test
      void getUserByIdTest() throws Exception {
-        User user = new User();
-        user.setId(101l);
-        user.setName("Parashar");
-        MalaBarResponse<User> malaBarResponse= new MalaBarResponse<>();
-        malaBarResponse.setData(user);
-        when(service.getUserById(Mockito.anyLong())).thenReturn(Mono.just(malaBarResponse));
-
+       MalaBarResponse malabarResponse = mapper.readValue(resourceLoader.getResource("classpath:user.json").getFile(), MalaBarResponse.class);
+       System.out.println(malabarResponse);
+       when(service.getUserById(Mockito.anyLong())).thenReturn(Mono.just(malabarResponse));
         webClient.get().uri("/users","1L")
                 .header(HttpHeaders.ACCEPT, "application/json")
                 .exchange()
